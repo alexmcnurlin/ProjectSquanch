@@ -27,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
         // Let's create some views!
         input.setColumnCount(nColumns);
         input.setRowCount(nRows);
-        char[] myString = [""];
         for (int i=0; i<(nColumns*nRows+1); i++) {
             TextView myView = new TextView(this);
-            myString[0] = (char) i+48;
-            myView.setText(Integer.toString(i), 0, 1);
+            myView.setText(Integer.toString(i));
         }
 
         setContentView(R.layout.activity_main);
