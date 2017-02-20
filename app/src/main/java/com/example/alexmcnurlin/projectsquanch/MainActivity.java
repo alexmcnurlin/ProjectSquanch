@@ -29,15 +29,16 @@ public class MainActivity extends AppCompatActivity {
         int match_parent = LinearLayout.LayoutParams.MATCH_PARENT;
         int wrap_content = LinearLayout.LayoutParams.WRAP_CONTENT;
 
-
         // Get the height and width of the screen in px
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float dpToPx = ((float)displayMetrics.densityDpi)/((float)DisplayMetrics.DENSITY_DEFAULT);
         float height = displayMetrics.heightPixels;
         float width = displayMetrics.widthPixels;
+        int margin = (int)(dpToPx*getResources().getDimension(R.dimen.button_margin));
 
         // Add a statement for debugging purposes
         TextView test = (TextView)findViewById(R.id.test);
-        test.setText(Float.toString(width/nColumns));
+        test.setText(" " + Integer.toString(R.dimen.button_margin) + " ");
 
         // Get and modify the GridLayout
         GridLayout input = (GridLayout)findViewById(R.id.keyboard);
@@ -49,27 +50,37 @@ public class MainActivity extends AppCompatActivity {
         for (int i=1; i<(nColumns*nRows+1); i++) {
             RelativeLayout button = new RelativeLayout(this);
 
+            // Set up the main text within the button
             TextView mainText = new TextView(this);
-            mainText.setText(Integer.toString(i));
-            mainText.setGravity(Gravity.CENTER);
+            mainText.setText("sin");
+            mainText.setTextColor(getResources().getColor(R.color.colorAltText));
+            RelativeLayout.LayoutParams mainParams = new RelativeLayout.LayoutParams(wrap_content, wrap_content);
+            mainParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+            mainText.setLayoutParams(mainParams);
             int mainId = View.generateViewId();
             mainText.setId(mainId);
 
+            // Setup the alt text within the button
             TextView altText = new TextView(this);
-            altText.setText(Integer.toString(2*i));
+            altText.setText("sin^-1");
             altText.setGravity(Gravity.RIGHT);
-            altText.setBackgroundColor(rgb(100, 100, 200));
-            RelativeLayout.LayoutParams altParams = new RelativeLayout.LayoutParams(wrap_content, wrap_content);
+            altText.setTextSize((float)10);
+            altText.setTextColor(getResources().getColor(R.color.colorAltText));
+            altText.setPadding(0, 0, 10, 10);
+            RelativeLayout.LayoutParams altParams = new RelativeLayout.LayoutParams(match_parent, wrap_content);
             altParams.addRule(RelativeLayout.BELOW, mainId);
             altText.setLayoutParams(altParams);
 
+            // Add main text and alt text to the buttons, as well as configure the button
             button.addView(mainText);
             button.addView(altText);
+            button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(match_parent, wrap_content);
             params.height = (int)getResources().getDimension(R.dimen.button_height);
-            params.width = (int)width/nRows;
+            params.width = (int)width/nRows-2*margin;
+            params.setMargins(margin, margin, margin, margin);
             button.setLayoutParams(params);
-            //button.setText(Integer.toString(i));
+                        //button.setText(Integer.toString(i));
             //button.setWidth((int)width/nRows);
             //button.setHeight((int)getResources().getDimension(R.dimen.button_height));
             input.addView(button);
