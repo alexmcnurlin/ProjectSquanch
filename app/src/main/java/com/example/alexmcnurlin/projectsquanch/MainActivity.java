@@ -3,35 +3,76 @@ package com.example.alexmcnurlin.projectsquanch;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import static android.graphics.Color.rgb;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get the height and width of the screen in dp
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        setContentView(R.layout.activity_main);
 
         // Just some variable declarations
         int nColumns = 4;
         int nRows = 4;
 
+        int match_parent = LinearLayout.LayoutParams.MATCH_PARENT;
+        int wrap_content = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+
+        // Get the height and width of the screen in px
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        float height = displayMetrics.heightPixels;
+        float width = displayMetrics.widthPixels;
+
+        // Add a statement for debugging purposes
+        TextView test = (TextView)findViewById(R.id.test);
+        test.setText(Float.toString(width/nColumns));
+
+        // Get and modify the GridLayout
         GridLayout input = (GridLayout)findViewById(R.id.keyboard);
+        input.removeAllViews();
 
         // Let's create some views!
         input.setColumnCount(nColumns);
         input.setRowCount(nRows);
-        for (int i=0; i<(nColumns*nRows+1); i++) {
-            TextView myView = new TextView(this);
-            myView.setText(Integer.toString(i));
-        }
+        for (int i=1; i<(nColumns*nRows+1); i++) {
+            RelativeLayout button = new RelativeLayout(this);
 
-        setContentView(R.layout.activity_main);
+            TextView mainText = new TextView(this);
+            mainText.setText(Integer.toString(i));
+            mainText.setGravity(Gravity.CENTER);
+            int mainId = View.generateViewId();
+            mainText.setId(mainId);
+
+            TextView altText = new TextView(this);
+            altText.setText(Integer.toString(2*i));
+            altText.setGravity(Gravity.RIGHT);
+            altText.setBackgroundColor(rgb(100, 100, 200));
+            RelativeLayout.LayoutParams altParams = new RelativeLayout.LayoutParams(wrap_content, wrap_content);
+            altParams.addRule(RelativeLayout.BELOW, mainId);
+            altText.setLayoutParams(altParams);
+
+            button.addView(mainText);
+            button.addView(altText);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(match_parent, wrap_content);
+            params.height = (int)getResources().getDimension(R.dimen.button_height);
+            params.width = (int)width/nRows;
+            button.setLayoutParams(params);
+            //button.setText(Integer.toString(i));
+            //button.setWidth((int)width/nRows);
+            //button.setHeight((int)getResources().getDimension(R.dimen.button_height));
+            input.addView(button);
+        }
     }
 }
