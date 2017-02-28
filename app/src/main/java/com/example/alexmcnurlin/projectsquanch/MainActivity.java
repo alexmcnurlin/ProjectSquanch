@@ -44,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
             ButtonLayout myLayout = new ButtonLayout(this, R.raw.default_layout);
             JSONObject myData = myLayout.getjObject();
 
+            EqParser myEq = new EqParser("3+5*7");
+            String words = myEq.printEquation();
+
             // #debugging
-            String words = myData.getString("name");
+            //String words = myData.getString("name");
             test.setText(" " + words + " ");
 
             // Get the array of text for the buttons
