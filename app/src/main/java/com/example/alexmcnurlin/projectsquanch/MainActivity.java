@@ -63,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i=0; i<nButtons; i++) {
                 try {
-                    RelativeLayout button = new RelativeLayout(this);
+                    CustomButton button = new CustomButton(this);
 
                     // Set up the main text within the button
                     TextView mainText = new TextView(this);
                     mainText.setText(myLayout.getButtonText(i));
+                    button.setMainButtonText(myLayout.getButtonText(i));
                     mainText.setTextColor(getResources().getColor(R.color.colorAltText));
                     RelativeLayout.LayoutParams mainParams = new RelativeLayout.LayoutParams(wrap_content, wrap_content);
                     mainParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -95,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
                     params.width = (int) width / nColumns - 2 * margin;
                     params.setMargins(margin, margin, margin, margin);
                     button.setLayoutParams(params);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CustomButton v_0 = (CustomButton)v;
+                            String text = v_0.getMainButtonText();
+                            TextView test = (TextView)findViewById(R.id.test);
+                            test.setText(text);
+                        }
+                    });
                     input.addView(button);
                 } catch (JSONException e) {
                     test.setText("Error in button loop");

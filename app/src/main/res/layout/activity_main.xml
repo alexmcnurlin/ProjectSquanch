@@ -12,17 +12,27 @@
         android:text="Hello World!" />
 
     <LinearLayout
+        android:id="@+id/equationWindow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#DDDDDD"
+        android:dividerHeight="1dp"
+        android:layout_above="@+id/input"
+        android:text="Hello World">
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World" />
+
         <GridLayout
             android:id="@+id/keyboard"
             android:layout_width="match_parent"
@@ -30,24 +40,6 @@
             android:orientation="horizontal"
             android:rowCount="3"
             android:columnCount="3">
-            <LinearLayout
-                android:layout_height="100dp"
-                android:layout_width="100dp"
-                android:layout_margin="1dp"
-                android:background="@color/colorPrimary">
-            </LinearLayout>
-            <LinearLayout
-                android:layout_height="100dp"
-                android:layout_width="100dp"
-                android:layout_margin="1dp"
-                android:background="@color/colorPrimary">
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/keyboard"
-                android:text="I am buttons" />
         </GridLayout>
     </LinearLayout>
 </RelativeLayout>
